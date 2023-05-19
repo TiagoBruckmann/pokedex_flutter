@@ -1,0 +1,80 @@
+name: pokedex
+description: App to simulate a Pokedex
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+3
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+# versions available, run `flutter pub outdated`.
+dependencies:
+  flutter:
+    sdk: flutter
+
+  font_awesome_flutter: ^10.4.0
+  shimmer_animation: ^2.1.0+1
+  connectivity_plus: ^4.0.0
+  cupertino_icons: ^1.0.5
+  flutter_mobx: ^2.0.6+5
+  flutter_i18n: ^0.33.0
+  flutter_bloc: ^8.1.2
+  injectable: ^2.1.1
+  equatable: ^2.0.5
+  provider: ^6.0.5
+  graphic: ^2.2.0
+  dartz: ^0.10.1
+  get_it: ^7.6.0
+  mobx: ^2.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # rules and activating additional ones.
+  flutter_native_splash: ^2.3.0
+  injectable_generator: ^2.1.5
+  flutter_lints: ^2.0.1
+  mobx_codegen: ^2.3.0
+  build_runner: ^2.4.4
+  bloc_test: ^9.1.1
+  platform: ^3.1.0
+  mocktail: ^0.3.0
+  mockito: ^5.4.0
+  test: ^1.22.0
+  file: ^6.1.4
+
+# configure splash
+flutter_native_splash:
+  color: "#DC0A2D"
+  image: assets/img/logo.png
+  android: true
+  ios: true
+  fullscreen: true
+
+# The following section is specific to Flutter packages.
+flutter:
+
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  # assets:
+  assets:
+    - assets/
+    - assets/img/
+    - assets/languages/
+
+  # fonts:
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/poppins/Poppins-Black.ttf
+        - asset: assets/fonts/poppins/Poppins-Bold.ttf
+        - asset: assets/fonts/poppins/Poppins-ExtraBold.ttf
+        - asset: assets/fonts/poppins/Poppins-ExtraLight.ttf
+        - asset: assets/fonts/poppins/Poppins-Light.ttf
+        - asset: assets/fonts/poppins/Poppins-Medium.ttf
+        - asset: assets/fonts/poppins/Poppins-Regular.ttf
+        - asset: assets/fonts/poppins/Poppins-SemiBold.ttf
+        - asset: assets/fonts/poppins/Poppins-Thin.ttf

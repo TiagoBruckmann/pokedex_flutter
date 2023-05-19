@@ -1,0 +1,14 @@
+{
+  "app_name": "Pokédex",
+  "pages": {
+    "home": {
+      "app_bar": "Home pokédex"
+    },
+    "connection": {
+      "title": "Sem acesso a internet, reconecte-se!"
+    }
+  },
+  "routes": {
+    "app_bar": "Tela não encontrada"
+  }
+}

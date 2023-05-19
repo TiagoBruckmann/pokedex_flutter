@@ -1,0 +1,14 @@
+{
+  "app_name": "Pokédex",
+  "pages": {
+    "home": {
+      "app_bar": "Home pokédex"
+    },
+    "connection": {
+      "title": "Isn't access to ethernet, reconnect!"
+    }
+  },
+  "routes": {
+    "app_bar": "Screen not found"
+  }
+}
