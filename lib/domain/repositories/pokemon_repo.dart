@@ -6,5 +6,6 @@ import 'package:pokedex/domain/failures/failure.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class PokemonRepo {
-  Future<Either<Failure, List<PokemonEntity>>> getPokemon({ int? id });
+  Future<Either<Failure, List<PokemonEntity>>> getListPokemon();
+  Future<Either<Failure, PokemonEntity>> getPokemon( int id );
 }

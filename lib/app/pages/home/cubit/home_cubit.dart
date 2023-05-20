@@ -9,6 +9,7 @@ import 'package:pokedex/domain/failures/failure.dart';
 // import dos pacotes
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:pokedex/session.dart';
 
 part 'home_state.dart';
 
@@ -24,12 +25,11 @@ class HomeCubit extends Cubit<HomeCubitState> {
   final List<PokemonEntity> listPokemon = [];
   bool isLoaded = false;
 
-  void getPokemon() async {
+  Future<void> getPokemon() async {
     emit(const HomeStateLoading());
-    listPokemon.clear();
 
     // execute bussiness logic
-    final failureOrList = await pokemonUseCase.getPokemon();
+    final failureOrList = await pokemonUseCase.getListPokemon();
 
     failureOrList.fold(
       (failure) => emit(HomeStateError(message: _mapFailureToMessage(failure))),
@@ -44,7 +44,18 @@ class HomeCubit extends Cubit<HomeCubitState> {
 
   Future<void> refresh() async {
     emit(const HomeStateLoading());
-    getPokemon();
+    listPokemon.clear();
+    await getPokemon();
+  }
+
+  void goToDetail( PokemonEntity pokemon ) {
+    Navigator.pushNamed(
+      Session.globalContext.currentContext!,
+      "/detail",
+      arguments: {
+        "pokemon": pokemon,
+      }
+    );
   }
 
   String _mapFailureToMessage( Failure failure ) {

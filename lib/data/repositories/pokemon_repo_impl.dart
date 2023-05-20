@@ -15,9 +15,21 @@ class PokemonRepoImpl implements PokemonRepo {
   PokemonRepoImpl(this.pokemonRemoteDatasource);
 
   @override
-  Future<Either<Failure, List<PokemonModel>>> getPokemon({ int? id }) async {
+  Future<Either<Failure, List<PokemonModel>>> getListPokemon() async {
     try {
-      final result = await pokemonRemoteDatasource.getPokemon(id: id);
+      final result = await pokemonRemoteDatasource.getListPokemon();
+      return right(result);
+    } on ServerExceptions {
+      return left(ServerFailure());
+    } catch (e) {
+      return left(GeneralFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, PokemonModel>> getPokemon( int id ) async {
+    try {
+      final result = await pokemonRemoteDatasource.getPokemon( id );
       return right(result);
     } on ServerExceptions {
       return left(ServerFailure());

@@ -9,6 +9,7 @@
     }
   },
   "routes": {
-    "app_bar": "Tela não encontrada"
+    "app_bar": "Tela não encontrada",
+    "empty": "Seus pokémons fugiram, tente atualizar a página para eles voltar!"
   }
 }

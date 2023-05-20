@@ -10,8 +10,12 @@ class PokemonUseCase {
   final PokemonRepo pokemonRepo;
   PokemonUseCase( this.pokemonRepo );
 
-  Future<Either<Failure, List<PokemonEntity>>> getPokemon({ int? id }) async {
-    return pokemonRepo.getPokemon(id: id);
+  Future<Either<Failure, List<PokemonEntity>>> getListPokemon() async {
+    return pokemonRepo.getListPokemon();
+  }
+
+  Future<Either<Failure, PokemonEntity>> getPokemon( int id ) async {
+    return pokemonRepo.getPokemon(id);
   }
 
 }

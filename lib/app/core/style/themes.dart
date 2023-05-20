@@ -77,10 +77,6 @@ class Themes {
         color: _backgroundColorLight,
       ),
     ),
-    bottomAppBarTheme: const BottomAppBarTheme(
-      color: _primaryColorLight,
-      surfaceTintColor: _secondaryColorLight,
-    ),
     textTheme: _textThemeLight,
     colorScheme: const ColorScheme.light(
       background: _backgroundColorLight,

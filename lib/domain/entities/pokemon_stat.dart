@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 class PokemonStatEntity extends Equatable{
 
   final String attribute;
-  final double value;
+  final int value;
 
   const PokemonStatEntity( this.attribute, this.value );
 

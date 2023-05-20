@@ -9,6 +9,7 @@
     }
   },
   "routes": {
-    "app_bar": "Screen not found"
+    "app_bar": "Screen not found",
+    "empty": "Your Pokemon ran away, try to reload the screen for them come back!"
   }
 }

@@ -1,5 +1,6 @@
 // imports nativos do flutter
 import 'package:flutter/material.dart';
+import 'package:pokedex/app/pages/home/detail.dart';
 import 'package:pokedex/app/pages/home/home.dart';
 
 // import das telas
@@ -24,8 +25,12 @@ class Routes {
           builder: (_) => const HomePage(),
         );
       case "/detail" :
-        print("detail => ");
-        break;
+        final params = args as Map;
+        return MaterialPageRoute(
+          builder: (_) => DetailPage(
+            pokemon: params["pokemon"],
+          ),
+        );
       default:
         _errorRoute();
     }

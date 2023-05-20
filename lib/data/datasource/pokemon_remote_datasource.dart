@@ -13,7 +13,8 @@ import 'package:http/http.dart' as http;
 
 abstract class PokemonRemoteDatasource {
 
-  Future<List<PokemonModel>> getPokemon({ int? id });
+  Future<List<PokemonModel>> getListPokemon();
+  Future<PokemonModel> getPokemon( int id );
 
 }
 
@@ -22,16 +23,13 @@ class PokemonRemoteDatasourceImpl implements PokemonRemoteDatasource {
   PokemonRemoteDatasourceImpl( this.client );
 
   @override
-  Future<List<PokemonModel>> getPokemon({ int? id }) async {
+  Future<List<PokemonModel>> getListPokemon() async {
 
     Map<String, String> header = {
       "content-Type": "application/json",
     };
 
     Uri url = Uri.parse(Session.credentials.url);
-    if ( id != null ) {
-      url = Uri.parse("${Session.credentials.url}/$id");
-    }
 
     final response = await client.get(
       url,
@@ -52,6 +50,29 @@ class PokemonRemoteDatasourceImpl implements PokemonRemoteDatasource {
     }
 
     return list;
+  }
+
+  @override
+  Future<PokemonModel> getPokemon( int id ) async {
+
+    Map<String, String> header = {
+      "content-Type": "application/json",
+    };
+
+    final url = Uri.parse("${Session.credentials.url}/$id");
+
+    final response = await client.get(
+      url,
+      headers: header,
+    );
+
+    if ( response.statusCode != 200 ) {
+      throw ServerExceptions();
+    }
+
+    final responseBody = jsonDecode(response.body);
+
+    return PokemonModel.fromJson(responseBody, pokemonId: id);
   }
 
 }
