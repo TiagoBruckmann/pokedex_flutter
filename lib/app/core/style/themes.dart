@@ -18,33 +18,41 @@ class Themes {
   // .****************
   // Theme - Light
   // .****************
-  static const TextStyle _displayMediumTextLight = TextStyle(
-    fontFamily: "Poppins",
+  static const TextStyle _headlineLargeTextLight = TextStyle(
+    color: _backgroundColorLight,
     fontWeight: FontWeight.w700,
-    fontSize: 14,
+    fontFamily: "Poppins",
+    fontSize: 24,
+  );
+
+  static const TextStyle _displayMediumTextLight = TextStyle(
+    fontWeight: FontWeight.w700,
+    fontFamily: "Poppins",
+    fontSize: 17,
   );
 
   static const TextStyle _displaySmallTextLight = TextStyle(
-    fontFamily: "Poppins",
     fontWeight: FontWeight.w700,
-    fontSize: 10,
+    fontFamily: "Poppins",
+    fontSize: 12,
   );
 
   static const TextStyle _defaultTextLight = TextStyle(
-    fontFamily: "Poppins",
-    color: _textPrimaryLight,
     fontWeight: FontWeight.w400,
-    fontSize: 10,
+    color: _textPrimaryLight,
+    fontFamily: "Poppins",
+    fontSize: 16,
   );
 
   static const TextStyle _bodySmallTextLight = TextStyle(
-    fontFamily: "Poppins",
-    color: _textSecondaryLight,
     fontWeight: FontWeight.w400,
-    fontSize: 8,
+    color: _textSecondaryLight,
+    fontFamily: "Poppins",
+    fontSize: 14,
   );
 
   static const TextTheme _textThemeLight = TextTheme(
+    headlineLarge: _headlineLargeTextLight,
     displayMedium: _displayMediumTextLight,
     displaySmall: _displaySmallTextLight,
     bodyMedium: _defaultTextLight,

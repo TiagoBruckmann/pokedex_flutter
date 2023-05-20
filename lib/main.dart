@@ -11,6 +11,7 @@ import 'package:pokedex/app/core/style/themes.dart';
 
 // import dos domain
 import 'package:pokedex/domain/source/local/mobx/connection/connection.dart';
+import 'package:pokedex/domain/source/local/injection/injection.dart';
 
 // import dos pacotes
 import 'package:provider/provider.dart';
@@ -18,7 +19,7 @@ import 'package:provider/provider.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // configureDependencies();
+  configureDependencies();
 
   runApp(
     MultiProvider(
