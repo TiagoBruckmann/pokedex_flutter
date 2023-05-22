@@ -43,6 +43,7 @@ class HomePage extends StatelessWidget {
               backgroundColor: theme.colorScheme.secondary,
               child: Image.asset(
                 AppImages.pokeBall,
+                width: 30,
               ),
             ),
             title: Text(

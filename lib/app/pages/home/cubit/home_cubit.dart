@@ -34,7 +34,6 @@ class HomeCubit extends Cubit<HomeCubitState> {
 
     // execute bussiness logic
     final failureOrList = await pokemonUseCase.getListPokemon();
-    print("failureOrList => $failureOrList");
 
     failureOrList.fold(
       (failure) => emit(HomeStateError(message: _mapFailureToMessage(failure))),
@@ -42,7 +41,6 @@ class HomeCubit extends Cubit<HomeCubitState> {
         isLoaded = true;
         emit(HomeStateLoaded(success));
         listPokemon.addAll(success);
-        print("listPokemon => ${listPokemon.length}");
       },
     );
 
@@ -57,7 +55,6 @@ class HomeCubit extends Cubit<HomeCubitState> {
   }
 
   Future<void> refresh() async {
-    print("refresh => ");
     emit(const HomeStateLoading());
     clearPagination();
     listPokemon.clear();
