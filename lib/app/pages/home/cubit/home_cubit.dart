@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 // imports dos domain
+import 'package:pokedex/domain/source/local/injection/injection.dart';
 import 'package:pokedex/domain/usecases/pokemons_usecase.dart';
 import 'package:pokedex/domain/entities/pokemon.dart';
 import 'package:pokedex/domain/failures/failure.dart';
@@ -22,14 +23,18 @@ class HomeCubit extends Cubit<HomeCubitState> {
   HomeCubit( this.pokemonUseCase ) : super(const HomeInitial());
 
   TextEditingController controllerSearch = TextEditingController();
+  final ScrollController scrollController = ScrollController();
   final List<PokemonEntity> listPokemon = [];
   bool isLoaded = false;
 
   Future<void> getPokemon() async {
-    emit(const HomeStateLoading());
+    if ( nextPage == null && previousPage == null ) {
+      emit(const HomeStateLoading());
+    }
 
     // execute bussiness logic
     final failureOrList = await pokemonUseCase.getListPokemon();
+    print("failureOrList => $failureOrList");
 
     failureOrList.fold(
       (failure) => emit(HomeStateError(message: _mapFailureToMessage(failure))),
@@ -37,13 +42,24 @@ class HomeCubit extends Cubit<HomeCubitState> {
         isLoaded = true;
         emit(HomeStateLoaded(success));
         listPokemon.addAll(success);
+        print("listPokemon => ${listPokemon.length}");
       },
     );
 
   }
 
+  Future<void> loadMore() async {
+    if ( nextPage != null ) {
+      if ( scrollController.position.maxScrollExtent == scrollController.position.pixels ) {
+        await getPokemon();
+      }
+    }
+  }
+
   Future<void> refresh() async {
+    print("refresh => ");
     emit(const HomeStateLoading());
+    clearPagination();
     listPokemon.clear();
     await getPokemon();
   }

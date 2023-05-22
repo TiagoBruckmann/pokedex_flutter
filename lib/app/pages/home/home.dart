@@ -60,6 +60,12 @@ class HomePage extends StatelessWidget {
                 final bloc = BlocProvider.of<HomeCubit>(builder);
 
                 if ( !bloc.isLoaded ) {
+                  clearPagination();
+                  bloc.scrollController.addListener(() {
+                    if ( bloc.scrollController.position.maxScrollExtent == bloc.scrollController.position.pixels ) {
+                      bloc.loadMore();
+                    }
+                  });
                   bloc.getPokemon();
                 }
 
@@ -97,6 +103,7 @@ class HomePage extends StatelessWidget {
                   body: RefreshIndicator(
                     onRefresh: () => bloc.refresh(),
                     child: GridView.builder(
+                      controller: bloc.scrollController,
                       itemCount: bloc.listPokemon.length,
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,

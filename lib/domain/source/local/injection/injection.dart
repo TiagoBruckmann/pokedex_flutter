@@ -16,6 +16,10 @@ import 'package:get_it/get_it.dart';
 
 final getIt = GetIt.I;
 
+int totalItems = 0;
+String? nextPage;
+String? previousPage;
+
 @InjectableInit()
 void configureDependencies() {
 
@@ -32,4 +36,16 @@ void configureDependencies() {
   // extern
   getIt.registerFactory(() => http.Client());
 
+}
+
+void setPagination( Map<String, dynamic> json ) {
+  totalItems = json["count"];
+  nextPage = json["next"];
+  previousPage = json["previous"];
+}
+
+void clearPagination() {
+  totalItems = 0;
+  nextPage = null;
+  previousPage = null;
 }

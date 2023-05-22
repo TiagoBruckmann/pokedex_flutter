@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 // imports globais
+import 'package:pokedex/domain/source/local/injection/injection.dart';
 import 'package:pokedex/session.dart';
 
 // import dos data
@@ -30,6 +31,9 @@ class PokemonRemoteDatasourceImpl implements PokemonRemoteDatasource {
     };
 
     Uri url = Uri.parse(Session.credentials.url);
+    if ( nextPage != null ) {
+      url = Uri.parse(nextPage!);
+    }
 
     final response = await client.get(
       url,
@@ -41,6 +45,7 @@ class PokemonRemoteDatasourceImpl implements PokemonRemoteDatasource {
     }
 
     final responseBody = jsonDecode(response.body);
+    setPagination(responseBody);
 
     final List<PokemonModel> list = [];
     for ( final item in responseBody["results"] )  {
