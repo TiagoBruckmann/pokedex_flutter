@@ -4,6 +4,13 @@
     "home": {
       "app_bar": "Home pokédex"
     },
+    "detail": {
+      "about": "Sobre",
+      "weight": "Peso",
+      "height": "Altura",
+      "abilities": "Habilidades",
+      "stats": "Status e poderes"
+    },
     "connection": {
       "title": "Sem acesso a internet, reconecte-se!"
     }

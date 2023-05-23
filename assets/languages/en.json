@@ -4,6 +4,13 @@
     "home": {
       "app_bar": "Home pokédex"
     },
+    "detail": {
+      "about": "About",
+      "weight": "Weight",
+      "height": "Height",
+      "abilities": "Moves",
+      "stats": "Base stats"
+    },
     "connection": {
       "title": "Isn't access to ethernet, reconnect!"
     }

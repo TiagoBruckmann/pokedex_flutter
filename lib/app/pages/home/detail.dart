@@ -1,16 +1,17 @@
 // imports nativos
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pokedex/app/core/style/app_colors.dart';
-import 'package:pokedex/app/core/style/app_images.dart';
 
 // imports globais
 import 'package:pokedex/session.dart';
 
 // import das telas
+import 'package:pokedex/app/pages/home/widgets/loading_detail.dart';
 import 'package:pokedex/app/core/widgets/loading_connection.dart';
 import 'package:pokedex/app/core/widgets/pokedex_card.dart';
 import 'package:pokedex/app/pages/home/mobx/pokemon.dart';
+import 'package:pokedex/app/core/style/app_colors.dart';
+import 'package:pokedex/app/core/style/app_images.dart';
 
 // import dos domain
 import 'package:pokedex/domain/source/local/mobx/connection/connection.dart';
@@ -18,6 +19,7 @@ import 'package:pokedex/domain/entities/pokemon.dart';
 
 // import dos pacotes
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
@@ -47,27 +49,28 @@ class _DetailPageState extends State<DetailPage> {
 
     final theme = Theme.of(context);
 
-    SystemUiOverlayStyle(
-      statusBarColor: _mobx.pokemon?.primaryColor
-    );
-
     return Observer(
       builder: (builder) {
 
         return ( _mobx.pokemon == null )
-        ? const CircularProgressIndicator()
+        ? LoadingDetail(
+          pokemon: widget.pokemon,
+        )
         : Scaffold(
           backgroundColor: _mobx.pokemon?.primaryColor,
           appBar: AppBar(
+            systemOverlayStyle: SystemUiOverlayStyle(
+              statusBarColor: _mobx.pokemon?.primaryColor
+            ),
             title: Text(
-              widget.pokemon.name,
+              _mobx.pokemon?.name ?? widget.pokemon.name,
             ),
             backgroundColor: _mobx.pokemon?.primaryColor,
             actions: [
               Padding(
                 padding: const EdgeInsets.only( right: 16 ),
                 child: Text(
-                  "# ${widget.pokemon.id}",
+                  "# ${_mobx.pokemon?.id ?? widget.pokemon.id}",
                   style: TextStyle(
                     color: theme.scaffoldBackgroundColor,
                     fontWeight: FontWeight.w700,
@@ -86,8 +89,8 @@ class _DetailPageState extends State<DetailPage> {
                 image: AssetImage(AppImages.pokeBall),
                 fit: BoxFit.scaleDown,
                 alignment: Alignment.topRight,
-                scale: 2,
-                opacity: 90,
+                scale: 1.5,
+                opacity: 98,
               ),
             ),
             child: SingleChildScrollView(
@@ -133,7 +136,7 @@ class _DetailPageState extends State<DetailPage> {
                                 Padding(
                                   padding: const EdgeInsets.symmetric( vertical: 16 ),
                                   child: Text(
-                                    "Sobre",
+                                    FlutterI18n.translate(context, "pages.detail.about"),
                                     style: theme.textTheme.displayMedium!.apply( color: _mobx.pokemon!.primaryColor ),
                                   ),
                                 ),
@@ -142,50 +145,50 @@ class _DetailPageState extends State<DetailPage> {
                                   children: [
 
                                     Expanded(
+                                      flex: 2,
                                       child: ListTile(
-                                        leading: const FaIcon(
-                                          FontAwesomeIcons.weightHanging,
-                                        ),
                                         title: Text(
-                                          "${_mobx.pokemon!.weight} KG",
+                                          "${Session.sharedServices.convertValue(_mobx.pokemon!.weight!)} KG",
                                           style: theme.textTheme.bodyMedium,
                                         ),
                                         subtitle: Text(
-                                          "Peso",
+                                          FlutterI18n.translate(context, "pages.detail.weight"),
                                           style: theme.textTheme.bodySmall,
                                         ),
                                       ),
                                     ),
 
                                     Expanded(
+                                      flex: 2,
                                       child: ListTile(
-                                        leading: const FaIcon(
-                                          FontAwesomeIcons.rulerVertical,
-                                        ),
                                         title: Text(
-                                          "${_mobx.pokemon!.height} m",
+                                          "${Session.sharedServices.convertValue(_mobx.pokemon!.height!)} m",
                                           style: theme.textTheme.bodyMedium,
                                         ),
                                         subtitle: Text(
-                                          "Altura",
+                                          FlutterI18n.translate(context, "pages.detail.height"),
                                           style: theme.textTheme.bodySmall,
                                         ),
                                       ),
                                     ),
 
-                                    /*
-                                    const VerticalDivider(),
-                                    */
-
                                     Expanded(
+                                      flex: 3,
                                       child: ListTile(
-                                        title: Text(
-                                          _mobx.pokemon!.abilities![0].ability,
-                                          style: theme.textTheme.bodyMedium,
+                                        title: Column(
+                                          children: [
+                                            for ( final item in _mobx.pokemon!.abilities! )
+                                              Text(
+                                                item.ability,
+                                                style: theme.textTheme.bodySmall,
+                                                textAlign: TextAlign.center,
+                                              ),
+                                          ],
                                         ),
                                         subtitle: Text(
-                                          "Habilidades",
-                                          style: theme.textTheme.bodySmall,
+                                          FlutterI18n.translate(context, "pages.detail.abilities"),
+                                          style: theme.textTheme.bodyMedium,
+                                          textAlign: TextAlign.center,
                                         ),
                                       ),
                                     ),
@@ -196,7 +199,7 @@ class _DetailPageState extends State<DetailPage> {
                                 Padding(
                                   padding: const EdgeInsets.symmetric( vertical: 15 ),
                                   child: Text(
-                                    "Status e poderes",
+                                    FlutterI18n.translate(context, "pages.detail.stats"),
                                     style: theme.textTheme.displayMedium!.apply( color: _mobx.pokemon!.primaryColor ),
                                   ),
                                 ),
@@ -217,6 +220,31 @@ class _DetailPageState extends State<DetailPage> {
 
                               ],
                             ),
+                          ),
+                        ),
+                      ),
+
+                      Positioned(
+                        top: 80,
+                        child: TextButton(
+                          onPressed: () => _mobx.getPokemon(_mobx.pokemon!.id - 1),
+                          child: const FaIcon(
+                            FontAwesomeIcons.circleArrowLeft,
+                            color: AppColors.white,
+                            size: 25,
+                          ),
+                        ),
+                      ),
+
+                      Positioned(
+                        top: 80,
+                        right: 0,
+                        child: TextButton(
+                          onPressed: () => _mobx.getPokemon(_mobx.pokemon!.id + 1),
+                          child: const FaIcon(
+                            FontAwesomeIcons.circleArrowRight,
+                            color: AppColors.white,
+                            size: 25,
                           ),
                         ),
                       ),
