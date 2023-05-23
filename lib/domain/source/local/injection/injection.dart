@@ -3,7 +3,7 @@ import 'package:pokedex/app/pages/home/cubit/home_cubit.dart';
 
 // import dos domain
 import 'package:pokedex/domain/repositories/pokemon_repo.dart';
-import 'package:pokedex/domain/usecases/pokemons_usecase.dart';
+import 'package:pokedex/domain/usecases/pokemon_usecase.dart';
 
 // import dos data
 import 'package:pokedex/data/datasource/pokemon_remote_datasource.dart';

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 // imports dos domain
 import 'package:pokedex/domain/source/local/injection/injection.dart';
-import 'package:pokedex/domain/usecases/pokemons_usecase.dart';
+import 'package:pokedex/domain/usecases/pokemon_usecase.dart';
 import 'package:pokedex/domain/entities/pokemon.dart';
 import 'package:pokedex/domain/failures/failure.dart';
 
