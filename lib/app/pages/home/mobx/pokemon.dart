@@ -1,3 +1,6 @@
+// imports globais
+import 'package:pokedex/session.dart';
+
 // import dos domain
 import 'package:pokedex/domain/source/local/injection/injection.dart';
 import 'package:pokedex/domain/usecases/pokemon_usecase.dart';
@@ -31,7 +34,7 @@ abstract class _PokemonMobx with Store {
     final failureOrPokemon = await useCase.getPokemon(id);
 
     failureOrPokemon.fold(
-      (failure) => print("Deu ruim nos detalhes => ${failure.message}"),
+      (failure) => Session.crash.onFailure(failure.message),
       (success) => setPokemon(success),
     );
 

@@ -2,8 +2,10 @@
 import 'dart:convert';
 
 // imports globais
-import 'package:pokedex/domain/source/local/injection/injection.dart';
 import 'package:pokedex/session.dart';
+
+// import dos domain
+import 'package:pokedex/domain/source/local/injection/injection.dart';
 
 // import dos data
 import 'package:pokedex/data/exceptions/exceptions.dart';

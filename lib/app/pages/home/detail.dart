@@ -37,10 +37,15 @@ class _DetailPageState extends State<DetailPage> {
   late ConnectionMobx _connectionMobx;
 
   @override
+  void initState() {
+    super.initState();
+    Session.appEvents.sendScreen("detail");
+  }
+
+  @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
     _connectionMobx = Provider.of<ConnectionMobx>(context);
-
     await _mobx.getPokemon(widget.pokemon.id);
   }
 

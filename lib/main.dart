@@ -1,5 +1,6 @@
 // imports nativos
 import 'package:flutter/material.dart';
+import 'dart:ui';
 
 // imports globais
 import 'package:pokedex/session.dart';
@@ -14,10 +15,21 @@ import 'package:pokedex/domain/source/local/mobx/connection/connection.dart';
 import 'package:pokedex/domain/source/local/injection/injection.dart';
 
 // import dos pacotes
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_performance/firebase_performance.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+  PlatformDispatcher.instance.onError = ( error, stackTrace ) {
+    FirebaseCrashlytics.instance.recordError(error, stackTrace, fatal: true);
+    return true;
+  };
+  FirebasePerformance.instance;
 
   configureDependencies();
 
@@ -27,11 +39,6 @@ Future<void> main() async {
         Provider(
           create: (context) => ConnectionMobx(),
         ),
-        /*
-        Provider(
-          create: (context) => CategoriesMobx(),
-        ),
-        */
       ],
       child: MaterialApp(
         navigatorKey: Session.globalContext,

@@ -1,6 +1,9 @@
 // imports globais
 import 'package:flutter/material.dart';
 
+// imports globais
+import 'package:pokedex/session.dart';
+
 // imports dos domain
 import 'package:pokedex/domain/source/local/injection/injection.dart';
 import 'package:pokedex/domain/usecases/pokemon_usecase.dart';
@@ -10,7 +13,6 @@ import 'package:pokedex/domain/failures/failure.dart';
 // import dos pacotes
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:pokedex/session.dart';
 
 part 'home_state.dart';
 
@@ -56,12 +58,14 @@ class HomeCubit extends Cubit<HomeCubitState> {
 
   Future<void> refresh() async {
     emit(const HomeStateLoading());
+    Session.appEvents.sharedEvent("home_refresh");
     clearPagination();
     listPokemon.clear();
     await getPokemon();
   }
 
   void goToDetail( PokemonEntity pokemon ) {
+    Session.appEvents.sharedEvent("home_open_detail");
     Navigator.pushNamed(
       Session.globalContext.currentContext!,
       "/detail",
@@ -72,6 +76,7 @@ class HomeCubit extends Cubit<HomeCubitState> {
   }
 
   String _mapFailureToMessage( Failure failure ) {
+    Session.crash.onFailure(failure.message);
     switch (failure.runtimeType) {
       case ServerFailure:
         return serverFailureMessage;

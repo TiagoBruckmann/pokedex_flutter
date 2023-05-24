@@ -6,6 +6,8 @@ import 'package:pokedex/app/core/services/shared.dart';
 
 // import dos domain
 import 'package:pokedex/domain/source/remote/credentials.dart';
+import 'package:pokedex/domain/source/remote/app_events.dart';
+import 'package:pokedex/domain/source/remote/crash.dart';
 
 class Session {
 
@@ -13,5 +15,7 @@ class Session {
 
   static final SharedServices sharedServices = SharedServices();
   static final Credentials credentials = Credentials();
+  static final AppEvents appEvents = AppEvents();
+  static final Crash crash = Crash();
 
 }

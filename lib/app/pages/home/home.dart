@@ -28,6 +28,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    Session.appEvents.sendScreen("home");
     final connectionMobx = Provider.of<ConnectionMobx>(context);
     connectionMobx.connectivity.onConnectivityChanged.listen(connectionMobx.updateConnectionStatus);
     final ThemeData theme = Theme.of(context);
@@ -47,7 +48,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             title: Text(
-              FlutterI18n.translate(context, "app_name"),
+              FlutterI18n.translate(builder, "app_name"),
               style: theme.textTheme.headlineLarge,
             ),
           ),
@@ -56,9 +57,9 @@ class HomePage extends StatelessWidget {
           : BlocProvider(
             create: (create) => getIt<HomeCubit>(),
             child: BlocBuilder<HomeCubit, HomeCubitState>(
-              builder: ( builder, state ) {
+              builder: ( blocBuilder, state ) {
 
-                final bloc = BlocProvider.of<HomeCubit>(builder);
+                final bloc = BlocProvider.of<HomeCubit>(blocBuilder);
 
                 if ( !bloc.isLoaded ) {
                   clearPagination();
@@ -74,7 +75,7 @@ class HomePage extends StatelessWidget {
                   return const LoadingPokemonWidget();
                 }
 
-                if ( state is HomeStateError ) {
+                if ( state is HomeStateError || bloc.listPokemon.isEmpty ) {
                   return PokedexCardWidget(
                     body: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -89,7 +90,7 @@ class HomePage extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only( top: 15 ),
                           child: Text(
-                            FlutterI18n.translate(builder, "routes.empty"),
+                            FlutterI18n.translate(blocBuilder, "routes.empty"),
                             textAlign: TextAlign.center,
                             style: theme.textTheme.bodySmall,
                           ),
@@ -109,7 +110,7 @@ class HomePage extends StatelessWidget {
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                       ),
-                      itemBuilder: ( builder, index ) {
+                      itemBuilder: ( itemBuilder, index ) {
 
                         PokemonEntity pokemon = bloc.listPokemon[index];
 

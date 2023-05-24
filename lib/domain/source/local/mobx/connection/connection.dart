@@ -2,6 +2,9 @@
 import 'package:flutter/services.dart';
 import 'dart:async';
 
+// imports globais
+import 'package:pokedex/session.dart';
+
 // import dos pacotes
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:mobx/mobx.dart';
@@ -26,7 +29,7 @@ abstract class _ConnectionMobx with Store {
     try {
       result = await connectivity.checkConnectivity();
     } on PlatformException catch (e) {
-      print("e => $e");
+      Session.crash.log(e);
       return;
     }
 
