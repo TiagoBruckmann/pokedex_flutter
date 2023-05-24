@@ -211,9 +211,17 @@ class _DetailPageState extends State<DetailPage> {
 
                                 for ( final item in _mobx.pokemon!.stats! )
                                   ListTile(
-                                    leading: Text(
-                                      item.attributeAbbreviation,
-                                      style: theme.textTheme.displaySmall!.apply( color: _mobx.pokemon!.primaryColor ),
+                                    leading: Text.rich(
+                                      TextSpan(
+                                        text: item.attributeAbbreviation,
+                                        style: theme.textTheme.displaySmall!.apply( color: _mobx.pokemon!.primaryColor ),
+                                        children: [
+                                          TextSpan(
+                                            text: " ${item.value}",
+                                            style: theme.textTheme.bodySmall,
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                     title: LinearProgressIndicator(
                                       minHeight: 5,
